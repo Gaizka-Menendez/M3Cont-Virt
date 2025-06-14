@@ -10,3 +10,12 @@ Local_Session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 # bind = engine cada sesion creada que use el engine creado
 Base = declarative_base()
 # clase base para nuestros modelos, es decir cada clase declarada con Base le indicamos a SQL Alchemy que esa clase en concreto será una tabla de la BBDD
+
+# Esta función (get_db) servirá como generador de sesiones de nuestra BD además de asegurarse su correcta gestion en los diferentes
+# endpoints que requieran del uso de conexión. Se indica con Depends
+def get_db():
+    db = Local_Session()
+    try:
+        yield db
+    finally:
+        db.close()

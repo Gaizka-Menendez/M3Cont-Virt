@@ -23,15 +23,6 @@ app = FastAPI(
     version="1.0.0", 
     debug=True  # He añadido esta opción porque en la docu vi que era util para ver el registro de errores o causas de los posibles fallos
 )
-
-# Esta función (get_db) servirá como generador de sesiones de nuestra BD además de asegurarse su correcta gestion en los diferentes
-# endpoints que requieran del uso de conexión. Se indica con Depends
-def get_db():
-    db = Local_Session()
-    try:
-        yield db
-    finally:
-        db.close()
         
 
 # Funcion para cifrar la contraseña del usuario
