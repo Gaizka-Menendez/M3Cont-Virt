@@ -1,4 +1,4 @@
-Práctica del Módulo de Programación Avanzada de Gaizka Menéndez Hernández
+Author: Gaizka Menéndez Hernández
 
 **Gestión de una Biblioteca de forma digital**.
 
