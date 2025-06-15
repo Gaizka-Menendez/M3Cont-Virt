@@ -2,8 +2,6 @@ services:
 
   api-biblioteca:
     build: .
-    volumes:
-      - library_db:/app/library_app.db
     ports:
       - "8080:8000"
     environment: 
@@ -13,23 +11,30 @@ services:
       DB_PASSWORD: password_biblioteca 
       DB_NAME: db_biblioteca 
     depends_on: 
-      - db-biblioteca
+      db-biblioteca:
+        condition: service_healthy # Sirve para asegurarnos que la API esta ya disponiblepara que se pueda conectar
     networks:
       - library-net
   
   db-biblioteca: 
-    image: postgres:13 
+    image: postgres:latest
     environment: 
       POSTGRES_USER: user_biblioteca 
       POSTGRES_PASSWORD: password_biblioteca 
       POSTGRES_DB: db_biblioteca 
     volumes:
-      - library-db:/var/lib/postgresql/data 
+      - db-data:/var/lib/postgresql/data 
     networks:
       - library-net
+    healthcheck: # Esto lo he añadido para ver que el servidor de BD de PostgreSQL que puede aceptar conexiones
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"] 
+      interval: 5s 
+      timeout: 5s  
+      retries: 5 
+      start_period: 10s
 
 volumes:
-  library-db:
+  db-data:
 
 networks:
   library-net:
