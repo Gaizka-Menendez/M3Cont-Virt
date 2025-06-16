@@ -61,7 +61,7 @@ A continuación voy a detallar un poco que es lo que ocurre en cada una de las c
 Adicionalmente a lo comentado anteriormente, para clarificar las relaciones entre clases y la lógica de mi app que originalmente pretendía. Diseñé un archivo sketch de drawio de un modelo entidad relación que se encuentra disponible en la carpeta other_resources además de la batería de pruebas ejecutada y probada en la demo.
 
 
-4. **Separación de la API de la BDD**
+4. **Contenerización de la aplicación. Separación de la API de la BDD**
 
 El archivo Dockerfile representa la imagen que dispondrá de la parte correspondiente a la aplicación de nuestra biblioteca. Aqui se define que nuestra API escuchará por el puerto 8000
 
