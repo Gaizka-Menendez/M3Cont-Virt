@@ -59,3 +59,15 @@ A continuación voy a detallar un poco que es lo que ocurre en cada una de las c
 
 
 Adicionalmente a lo comentado anteriormente, para clarificar las relaciones entre clases y la lógica de mi app que originalmente pretendía. Diseñé un archivo sketch de drawio de un modelo entidad relación que se encuentra disponible en la carpeta other_resources además de la batería de pruebas ejecutada y probada en la demo.
+
+
+4. **Separación de la API de la BDD**
+
+El archivo Dockerfile representa la imagen que dispondrá de la parte correspondiente a la aplicación de nuestra biblioteca. Aqui se define que nuestra API escuchará por el puerto 8000
+
+
+En el docker compose se define la red que usaremos para nuestra aplicación, denominada library-net. Se levantan dos contenedores, un contenedor para la api y otro para la BDD. El puerto de mi host a traves de donde puedo acceder a la Api es el 8080 y el del contenedor desde donde escucha es el 8000 como hemos definifo en el Dockerfile.
+
+En el archivo docker-compose se define este despliegue, utilicé la documentación de docker oficial para estos casos de uso con docker-compose: [text](https://docs.docker.com/guides/databases/). Como mi tipo de conexión desde el módulo de Programación avanzada la diseñé con sqlite me daba problemas de conexion entre contenedores y la cambié a PostgreSQL.
+
+Por otro lado, se define un "control de salud" o healthcheck, esto es debido a que cuando ejecutaba la instrucción `docker-compose up -d --build` había veces que uno de los dos contenedores no se levantaba. Me di cuenta cuando trataba de probar los métodos CRUD de mi api, porque el contenedor de la BDD no terminaba de arrancar a tiempo para conectarse al otro contenedor que contenía la API. Buscando por el error me encontré con este artículo: [text](https://medium.com/@saklani1408/configuring-healthcheck-in-docker-compose-3fa6439ee280) donde se explicaba como resolverlo.
